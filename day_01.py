@@ -16,3 +16,9 @@ def part_01(x):
 def part_02(x):
     # Number of increases of 3 element rolling window
     return part_01(np.convolve(x, np.ones(3), 'valid'))
+
+
+if __name__ == '__main__':
+    x = read_input()
+    print(f'Part 1: {part_01(x)}')
+    print(f'Part 2: {part_02(x)}')
