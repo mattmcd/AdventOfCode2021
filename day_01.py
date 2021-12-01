@@ -15,5 +15,4 @@ def part_01(x):
 
 def part_02(x):
     # Number of increases of 3 element rolling window
-    y = np.cumsum(x)
-    return part_01(y[3:] - y[0:-3]) + 1
+    return np.convolve(x, np.ones(3), 'valid')
