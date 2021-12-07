@@ -30,9 +30,32 @@ def part_02(x):
     return calc_min_fuel(crab_pos, fuel_cost)
 
 
+# From the reddit thread:
+# part 1 is equivalent to minimizing the l1-norm => median
+def part_01_v2(x):
+    crab_pos = parse_input(x)
+    x_min = int(np.median(crab_pos))
+    return np.abs(crab_pos - x_min).sum()
+
+
+# From the reddit thread:
+# part 2 is equivalent to minimizing the l2-norm + extra linear term => mean and search
+def part_02_v2(x):
+    crab_pos = parse_input(x)
+    x_min = np.mean(crab_pos)
+
+    def fuel_cost(x_p, x0):
+        y = np.abs(x_p - x0)
+        return (y*(y+1) // 2).sum()
+
+    return min(fuel_cost(crab_pos, x0) for x0 in [int(np.floor(x_min)), int(np.ceil(x_min))])
+
+
 if __name__ == '__main__':
-    print(f'Part 1 test: {part_01(x_test)}, expected 37')
-    print(f'Part 2 test: {part_02(x_test)}, expected 168')
+    p1 = part_01_v2
+    p2 = part_02_v2
+    print(f'Part 1 test: {p1(x_test)}, expected 37')
+    print(f'Part 2 test: {p2(x_test)}, expected 168')
     x = read_input(7)
-    print(f'Part 1: {part_01(x)}')
-    print(f'Part 2: {part_02(x)}')
+    print(f'Part 1: {p1(x)}')
+    print(f'Part 2: {p2(x)}')
